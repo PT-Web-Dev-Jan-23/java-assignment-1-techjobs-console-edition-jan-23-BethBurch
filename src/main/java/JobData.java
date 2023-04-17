@@ -5,10 +5,7 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -77,9 +74,9 @@ public class JobData {
 
         for (HashMap<String, String> row : allJobs) {
 
-            String aValue = row.get(column);
+            String aValue = row.get(column).toLowerCase();
 
-            if (aValue.contains(value)) {
+            if (aValue.contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
@@ -94,12 +91,37 @@ public class JobData {
      * @return      List of all jobs with at least one field containing the value
      */
     public static ArrayList<HashMap<String, String>> findByValue(String value) {
+// this method(function) takes the String from the search input and then returns an array of hashmaps that in the String input type
 
         // load data, if not already loaded
         loadData();
+//        we  will be iterating through the allJobs
+//        create a variable to hold out new search results before creating the loop
+        ArrayList<HashMap<String, String>> foundValues = new ArrayList<>();
+        //ArrayList is a class in Java's java.util package || <HashMap<String, String>>: This is a parameterized type that specifies the type of objects that the ArrayList will hold.
+        // In this case, it is a HashMap object that maps String keys to String values
+        //foundValues is the variable I created
+        // new ArrayList<>(): This is an instantiation of the ArrayList class. It creates a new, empty ArrayList object of the specified
+        // parameterized type (HashMap<String, String> in this case)
+        // and assigns it to the foundValues variable
+        for (HashMap<String, String> job : allJobs) {
+//            iterates over a collection of HashMap<String, String> objects named allJobs. On each iteration,
+//            it assigns the current element of the collection to the variable job.
+            for (Map.Entry<String, String> entry : job.entrySet()) {
+//                iterates over the entrySet() of the HashMap object job. The entrySet() method returns a set of all the key-value pairs in the HashMap,
+//                represented as Map.Entry objects. On each iteration, it assigns the current Map.Entry object to the variable entry
+                if (entry.getValue().toLowerCase().contains(value.toLowerCase())) {
+//                    checks if the value of the current entry object (which is a String) contains the value String passed to the method
+                    foundValues.add(job);
+//                    if statement is true, it adds the current job object to the foundValues ArrayList.
+                    break;
+//                   exits the inner for-each loop once a match is found, since we only want to add each job object to foundValues once.
+//                   Once a match is found, there is no need to continue searching for matches in the same job.
+                }
+            }
+        }
 
-        // TODO - implement this method
-        return null;
+return foundValues;
     }
 
     /**

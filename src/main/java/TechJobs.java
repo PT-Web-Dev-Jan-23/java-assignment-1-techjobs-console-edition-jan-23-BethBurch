@@ -10,7 +10,7 @@ public class TechJobs {
 
     static Scanner in = new Scanner(System.in);
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
 
         // Initialize our field map with key/name pairs
         HashMap<String, String> columnChoices = new HashMap<>();
@@ -112,14 +112,23 @@ public class TechJobs {
                 validChoice = true;
             }
 
-        } while(!validChoice);
+        } while (!validChoice);
 
         return choiceKeys[choiceIdx];
     }
 
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
-
-        System.out.println("printJobs is not implemented yet");
+        if (someJobs.size() == 0) { //if the hashmap of array list when searched returns zero then print "no Results"
+            System.out.print("No Results");
+        }
+        // first for loop
+        for (HashMap<String, String> job : someJobs) { //this for-each loop is iterating over each hashmap(key,value Pair) in Array list
+            System.out.println("\n*****");
+            for (Map.Entry<String, String> field : job.entrySet()) { //nested loop to iterate over each field(variable) in the hashmap and prints each entry
+                System.out.println(field.getKey() + ": " + field.getValue()); //getKey and getValue are methods of the Map.Entry*** A map entry (key-value pair). The Map.entrySet method returns a collection-view of the map
+            }
+            System.out.println("*****"); // new line to match output
+        }
     }
 }
